@@ -13,6 +13,7 @@ const state = {
 };
 
 let activeClue = null;  // { catIndex, rowIndex, points }
+let debugMode = false;  // host preview: show every question + answer on the board
 
 /* ---------- persistence ---------- */
 
@@ -40,6 +41,8 @@ function loadState() {
 function renderBoard() {
   const board = document.getElementById("board");
   board.innerHTML = "";
+  board.style.gridTemplateColumns = `repeat(${GAME_CONFIG.categories.length}, 1fr)`;
+  board.classList.toggle("debug", debugMode);
 
   GAME_CONFIG.categories.forEach((cat) => {
     const cell = document.createElement("div");
@@ -54,8 +57,28 @@ function renderBoard() {
       const cell = document.createElement("button");
       cell.className = "clue-cell";
       const key = `${catIndex}-${rowIndex}`;
+      const used = state.usedClues[key];
 
-      if (state.usedClues[key]) {
+      if (debugMode) {
+        // Host preview: show the question + answer text on every tile.
+        cell.classList.add("debug-cell");
+        if (used) cell.classList.add("done");
+
+        const pts = document.createElement("span");
+        pts.className = "debug-points";
+        pts.textContent = clue && clue.image ? `${points} 🖼` : `${points}`;
+
+        const q = document.createElement("span");
+        q.className = "debug-q";
+        q.textContent = clue ? clue.question : "—";
+
+        const a = document.createElement("span");
+        a.className = "debug-a";
+        a.textContent = clue ? clue.answer : "";
+
+        cell.append(pts, q, a);
+        if (clue) cell.addEventListener("click", () => openClue(catIndex, rowIndex, points));
+      } else if (used) {
         cell.classList.add("done");
         cell.textContent = "✦";
         cell.disabled = true;
@@ -73,6 +96,14 @@ function renderBoard() {
       board.appendChild(cell);
     });
   });
+}
+
+function toggleDebug() {
+  debugMode = !debugMode;
+  const btn = document.getElementById("debug-btn");
+  btn.classList.toggle("active", debugMode);
+  btn.textContent = debugMode ? "🐛 DEBUG: HIDE CLUES" : "🐛 DEBUG: SHOW ALL CLUES";
+  renderBoard();
 }
 
 /* ---------- clue modal ---------- */
@@ -103,6 +134,20 @@ function openClue(catIndex, rowIndex, points) {
 
   document.getElementById("modal-answer").classList.add("hidden");
   document.getElementById("modal-answer-text").textContent = clue.answer;
+
+  const ansImg = document.getElementById("modal-answer-image");
+  if (clue.answerImage) {
+    ansImg.src = clue.answerImage;
+    ansImg.classList.remove("hidden");
+    ansImg.onerror = () => {
+      ansImg.classList.add("hidden");
+      console.warn(`Answer image not found for clue: ${clue.answerImage}`);
+    };
+  } else {
+    ansImg.classList.add("hidden");
+    ansImg.removeAttribute("src");
+  }
+
   document.getElementById("reveal-btn").classList.remove("hidden");
   document.getElementById("award-panel").classList.add("hidden");
   document.getElementById("modal").classList.remove("hidden");
@@ -282,6 +327,7 @@ function init() {
 
   document.getElementById("add-team-btn").addEventListener("click", addTeam);
   document.getElementById("reset-btn").addEventListener("click", resetGame);
+  document.getElementById("debug-btn").addEventListener("click", toggleDebug);
   document.getElementById("reveal-btn").addEventListener("click", revealAnswer);
   document.getElementById("no-award-btn").addEventListener("click", () => closeClue(true));
   document.getElementById("modal-close").addEventListener("click", () => closeClue(false));

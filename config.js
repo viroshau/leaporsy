@@ -6,7 +6,8 @@
 
    Structure:
    - title: shown at the top of the board
-   - categories: exactly 5, each with a name and 5 clues
+   - categories: each with a name and 5 clues (the board grid
+     adapts to however many categories you list)
    - Each clue has:
        question : what the host reads / players see
        answer   : revealed when the host clicks "Reveal Answer"
@@ -14,9 +15,15 @@
                   the question — great for "guess what this is"
                   style clues. Put local images in the images/
                   folder, e.g.  image: "images/my-picture.png"
+       answerImage : (OPTIONAL) a picture revealed together with
+                  the answer — use it for a punchline / big reveal.
    - Point values are automatic: 100, 200, 300, 400, 500
      (row 1 = 100 ... row 5 = 500). Change POINT_VALUES below
      if you want different stakes.
+
+   Note on the AI answers: many include a short "*(...)*" aside
+   explaining what the term actually means — read it aloud after
+   revealing, so the mixed crowd learns something.
    ============================================================ */
 
 const GAME_CONFIG = {
@@ -24,103 +31,52 @@ const GAME_CONFIG = {
 
   categories: [
     {
-      name: "AI Agents",
+      name: "AI, Defined",
       clues: [
         {
-          question: "This is the general term for an AI system that can plan, use tools, and take actions autonomously to achieve a goal.",
+          question: "This San Francisco AI lab created the GPT line of models and kicked off the modern chatbot era with ChatGPT in late 2022.",
+          answer: "What is OpenAI?",
+        },
+        {
+          question: "This 2017 architecture — the 'T' in GPT — powers virtually every modern large language model.",
+          answer: "What is the Transformer? (It lets the model weigh every word against every other word at once — the architecture under GPT, Claude, and BERT.)",
+        },
+        {
+          question: "Stuffing relevant documents into the prompt so the model answers from your data, not its memory.",
+          answer: "What is RAG (Retrieval-Augmented Generation)? (Cheaper and fresher than fine-tuning — the go-to approach for 'chat with our docs.')",
+        },
+        {
+          question: "The catch-all term for training a base model further on your own narrower dataset — to teach it a style, domain, or task.",
+          answer: "What is fine-tuning? (The alternative to RAG: you bake the knowledge into the weights instead of feeding it in at question-time.)",
+        },
+        {
+          question: "This landmark 2017 Google paper introduced the Transformer — its punchy six-word title cheekily claims a single mechanism is all you require.",
+          answer: "What is 'Attention Is All You Need'? (Its self-attention mechanism lets every token weigh every other token — the breakthrough that made modern LLMs possible.)",
+        },
+      ],
+    },
+    {
+      name: "Agents & Tools",
+      clues: [
+        {
+          question: "This is the general term for an AI system that can plan, use tools, and take actions autonomously to achieve a goal — not just answer a single prompt.",
           answer: "What is an (AI) agent?",
         },
         {
-          question: "MCP, a popular open protocol for connecting AI agents to tools and data, stands for this.",
-          answer: "What is the Model Context Protocol?",
+          question: "Letting a model call external functions — search the web, run code, hit an API — rather than only generating text.",
+          answer: "What is tool use (a.k.a. function calling)? (This is what turns a chatbot into something that can actually do things.)",
+        },
+        {
+          question: "The open standard nicknamed 'USB-C for AI' — it lets models plug into tools and data sources through one common connector — abbreviated MCP.",
+          answer: "What is the Model Context Protocol? (One integration standard instead of hand-coding every tool.)",
         },
         {
           question: "This is the name for the loop where an agent reasons about what to do, calls a tool, observes the result, and repeats.",
           answer: "What is the ReAct loop (reason + act)?",
         },
         {
-          question: "When multiple agents divide up a task and coordinate with each other, this is the general term for such a system.",
-          answer: "What is a multi-agent system?",
-        },
-        {
-          question: "This safety concern describes an agent finding an unintended shortcut that maximizes its objective while violating the spirit of the task.",
-          answer: "What is reward hacking (specification gaming)?",
-        },
-      ],
-    },
-    {
-      name: "Spot the Slop",
-      clues: [
-        {
-          question: "AI-generated images of people notoriously struggle to draw the right number of these body parts.",
-          answer: "What are fingers?",
-        },
-        {
-          question: "Look closely at this picture — name one clue that it was generated by AI.",
-          answer: "Sample answers: garbled text, melted background objects, inconsistent lighting, extra limbs.",
-          image: "images/sample-slop.svg",
-        },
-        {
-          question: "This word — also used for low-grade food waste fed to pigs — became the go-to term for low-effort AI-generated content flooding the internet.",
-          answer: "What is slop?",
-        },
-        {
-          question: "AI-written text loves this em-dash-adjacent crutch phrase: \"It's not just X — it's Y.\" Name the general term for such telltale AI writing patterns.",
-          answer: "What are AI tells (or 'GPT-isms')?",
-        },
-        {
-          question: "This term describes an AI confidently stating false information as if it were fact.",
-          answer: "What is a hallucination?",
-        },
-      ],
-    },
-    {
-      name: "World Cup",
-      clues: [
-        {
-          question: "This country has won the most FIFA World Cups, with five titles.",
-          answer: "What is Brazil?",
-        },
-        {
-          question: "The 2026 World Cup is co-hosted by these three countries.",
-          answer: "What are the USA, Canada, and Mexico?",
-        },
-        {
-          question: "This Argentine legend finally lifted the World Cup trophy in 2022 in Qatar.",
-          answer: "Who is Lionel Messi?",
-        },
-        {
-          question: "In the 2014 semi-final, Germany humiliated host nation Brazil with this infamous scoreline.",
-          answer: "What is 7–1?",
-        },
-        {
-          question: "This player scored a hat-trick in the 2022 World Cup final — and still lost.",
-          answer: "Who is Kylian Mbappé?",
-        },
-      ],
-    },
-    {
-      name: "Hallucination Station",
-      clues: [
-        {
-          question: "TRUE or FALSE: An AI once advised a lawyer with court cases that turned out to be completely made up.",
-          answer: "TRUE — in 2023 a lawyer submitted a brief citing six non-existent cases invented by ChatGPT.",
-        },
-        {
-          question: "One of these three 'facts' is real, the other two are hallucinated: (a) The Eiffel Tower grows taller in summer, (b) Goldfish have a 3-second memory, (c) Napoleon was unusually short.",
-          answer: "What is (a)? Heat expands the metal by ~15 cm. The other two are myths.",
-        },
-        {
-          question: "This is the common technique of grounding an AI's answers in retrieved documents to reduce hallucinations — abbreviated RAG.",
-          answer: "What is Retrieval-Augmented Generation?",
-        },
-        {
-          question: "When an AI invents a plausible-looking citation, URL, or API function that doesn't exist, researchers call this type of output by this confident-sounding word.",
-          answer: "What is a confabulation (also accepted: fabrication / hallucination)?",
-        },
-        {
-          question: "Asking a model to say 'I don't know' instead of guessing, or sampling multiple answers and checking agreement, are strategies to improve this property of AI outputs.",
-          answer: "What is factuality (truthfulness / calibration)?",
+          question: "The aspirational milestone where a single AI matches humans across essentially all cognitive tasks — the endgame many agent efforts are chasing.",
+          answer: "What is AGI (Artificial General Intelligence)?",
         },
       ],
     },
@@ -132,20 +88,76 @@ const GAME_CONFIG = {
           answer: "What is a system prompt?",
         },
         {
-          question: "Giving the model a few worked examples in the prompt before asking your real question is called this kind of prompting.",
-          answer: "What is few-shot prompting?",
+          question: "Coding by describing what you want in plain natural language and letting the AI write the actual code.",
+          answer: "What is vibe coding? (Term popularized in 2025 — you steer by intent and 'vibes' instead of typing every line.)",
         },
         {
-          question: "\"Let's think step by step\" is the classic incantation for this prompting technique.",
-          answer: "What is chain-of-thought prompting?",
+          question: "This is a packaged, reusable bundle of instructions (and sometimes scripts) that an AI agent loads on demand to handle a specialized task — a plug-in playbook you write once and reuse.",
+          answer: "What is a skill? (Agent 'skills' teach a model a repeatable procedure once, instead of re-explaining it in every prompt.)",
         },
         {
-          question: "This attack tries to override an AI's instructions by smuggling malicious commands into the content it processes.",
-          answer: "What is prompt injection?",
+          question: "Smuggling malicious instructions inside data the model reads — a web page, an email, a PDF — so it obeys the attacker instead of you.",
+          answer: "What is prompt injection? (The core security problem for agents and RAG: anything the model reads can try to hijack it.)",
         },
         {
           question: "This is the term for the maximum amount of text (measured in tokens) a model can consider at once.",
           answer: "What is the context window?",
+        },
+      ],
+    },
+    {
+      name: "Spot the Slop",
+      clues: [
+        {
+          question: "WARM-UP: Every other tile here is obvious AI slop — this 'candid group selfie' is sneakier. Name at least one tell that it was AI-generated.",
+          answer: "Look at the hands & fingers (merged / miscounted), the melted laptop keyboard, the garbled 'art' in the wall frames, and the cat's slightly-off paws & face — all classic generative-AI giveaways.",
+          image: "images/real-photo.png",
+        },
+        {
+          question: "This mock 'Synthwave.ai' landing page commits the two most notorious AI-default design sins at once — name both. (One word for the color, one word for the fill style.)",
+          answer: "What are purple and gradient? (The 'purple gradients everywhere' look is the default aesthetic AI-built sites drift toward — a dead giveaway of machine-generated design.)",
+          image: "images/purple-gradients.png",
+        },
+        {
+          question: "This 'Our Services' layout leans on one overused AI-default UI move to make each card 'pop'. Name the design tell. (Hint: look at the edges of the cards.)",
+          answer: "What are thick (chunky, colored) borders? (Oversized card borders are a classic AI-generated design crutch.)",
+          image: "images/thick-border-cards.png",
+        },
+        {
+          question: "This 'Why Choose Us' feature grid over-does one element on every card — a favorite AI-default flourish. Name the tell.",
+          answer: "What are massive (oversized) icons? (Huge icons in rounded squares are a hallmark of AI-generated landing pages.)",
+          image: "images/massive-icons.png",
+        },
+        {
+          question: "FINAL SLOP: This glossy 3D character is peak 'Italian brainrot' — a viral genre of AI-generated mascots with absurd fake-Italian names. Name at least one tell that it's AI slop. (Reveal for the punchline.)",
+          answer: "Tells: the misspelling ('CAPPUCCIINA' with a double-i), the nonsense mashup names, the too-perfect plastic render, uncanny symmetry. Meet 'Cappuccino Assassino' & 'Ballerina Cappuccina' — a whole AI-slop meme genre.",
+          image: "images/cappuccino-question.png",
+          answerImage: "images/cappuccino-answer.png",
+        },
+      ],
+    },
+    {
+      name: "World Cup 2026",
+      clues: [
+        {
+          question: "The 2026 World Cup is co-hosted by these three countries.",
+          answer: "What are the USA, Canada, and Mexico?",
+        },
+        {
+          question: "For the first time ever, the tournament has expanded to this many teams.",
+          answer: "What is 48? (Up from 32 — 12 groups of four, plus a brand-new Round of 32.)",
+        },
+        {
+          question: "With the 2026 edition, this country becomes the first ever to host the men's World Cup three times.",
+          answer: "What is Mexico? (1970, 1986, and 2026.)",
+        },
+        {
+          question: "The final will be played at this stadium just outside New York City.",
+          answer: "What is MetLife Stadium (East Rutherford, New Jersey)?",
+        },
+        {
+          question: "The 2026 tournament features this record number of total matches.",
+          answer: "What is 104? (Up from 64 in previous editions.)",
         },
       ],
     },

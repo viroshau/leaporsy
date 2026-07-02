@@ -182,6 +182,59 @@ main, header { position: relative; z-index: 2; }
 }
 .clue-cell.done:hover { transform: none; box-shadow: none; }
 
+/* ---------- Debug / host-preview mode ---------- */
+.board.debug { grid-auto-rows: 1fr; }
+.clue-cell.debug-cell {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(.62rem, .82vw, .8rem);
+  line-height: 1.32;
+  min-height: 120px;
+  padding: 26px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  color: #fff;
+  text-shadow: none;
+}
+.clue-cell.debug-cell:hover { transform: translateY(-3px); box-shadow: var(--card-shadow), 0 0 22px rgba(255, 206, 0, .5); }
+.debug-cell .debug-points {
+  position: absolute; top: 7px; left: 12px;
+  font-family: "Rubik Mono One", monospace;
+  font-size: .9rem;
+  color: var(--gold);
+  text-shadow: 0 2px 0 rgba(0,0,0,.6);
+}
+.debug-cell .debug-q { font-weight: 600; color: #eef2ff; }
+.debug-cell .debug-a {
+  margin-top: auto;
+  font-weight: 700;
+  color: var(--lime);
+  border-top: 1px dashed rgba(168, 255, 62, .4);
+  padding-top: 6px;
+}
+.clue-cell.debug-cell.done { opacity: .5; color: #fff; }
+.clue-cell.debug-cell.done .debug-points::after { content: " ✦"; }
+
+/* ---------- Footer / debug toggle ---------- */
+.app-footer { text-align: center; margin: 28px auto 40px; }
+.btn-debug {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: .85rem;
+  letter-spacing: .04em;
+  background: rgba(10, 2, 34, .8);
+  color: rgba(255, 255, 255, .7);
+  border: 2px dashed rgba(255, 255, 255, .3);
+}
+.btn-debug:hover { color: #fff; border-color: var(--cyan); }
+.btn-debug.active {
+  background: var(--gold);
+  color: #2a1400;
+  border-style: solid;
+  border-color: var(--gold);
+  box-shadow: 0 0 22px rgba(255, 206, 0, .6);
+}
+
 /* ---------- Scoreboard ---------- */
 .scoreboard-wrap {
   max-width: 1180px;
@@ -419,6 +472,12 @@ main, header { position: relative; z-index: 2; }
   font-weight: 700;
   color: var(--lime);
   text-shadow: 0 0 14px rgba(168, 255, 62, .5);
+}
+#modal-answer-image {
+  margin: 14px auto 0;
+  max-height: 38vh;
+  border-color: var(--lime);
+  box-shadow: 0 8px 0 rgba(0,0,0,.4), 0 0 30px rgba(168, 255, 62, .4);
 }
 
 .award-panel { margin-top: 24px; text-align: center; }

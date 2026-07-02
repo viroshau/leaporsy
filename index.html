@@ -36,6 +36,12 @@
     </section>
   </main>
 
+  <footer class="app-footer">
+    <button id="debug-btn" class="btn btn-debug" title="Host preview: reveal every question &amp; answer on the board">
+      🐛 DEBUG: SHOW ALL CLUES
+    </button>
+  </footer>
+
   <!-- Clue modal -->
   <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
     <div class="modal-card">
@@ -50,6 +56,7 @@
         <div id="modal-answer" class="modal-answer hidden">
           <span class="answer-label">ANSWER</span>
           <p id="modal-answer-text"></p>
+          <img id="modal-answer-image" class="modal-image hidden" alt="Answer picture">
         </div>
       </div>
       <button id="reveal-btn" class="btn btn-reveal">👁 REVEAL ANSWER</button>
