@@ -66,7 +66,9 @@ function renderBoard() {
 
         const pts = document.createElement("span");
         pts.className = "debug-points";
-        pts.textContent = clue && clue.image ? `${points} 🖼` : `${points}`;
+        const ptsFlags = `${clue && clue.image ? " 🖼" : ""}${clue && clue.virtualVantage ? " ★VV" : ""}`;
+        pts.textContent = `${points}${ptsFlags}`;
+        if (clue && clue.virtualVantage) pts.classList.add("debug-vv");
 
         const q = document.createElement("span");
         q.className = "debug-q";
@@ -113,7 +115,8 @@ function openClue(catIndex, rowIndex, points) {
   const clue = cat.clues[rowIndex];
   if (!clue) return;
 
-  activeClue = { catIndex, rowIndex, points };
+  const isVirtualVantage = !!clue.virtualVantage;
+  activeClue = { catIndex, rowIndex, points, virtualVantage: isVirtualVantage };
 
   document.getElementById("modal-category").textContent = cat.name;
   document.getElementById("modal-points").textContent = `${points} PTS`;
@@ -150,7 +153,39 @@ function openClue(catIndex, rowIndex, points) {
 
   document.getElementById("reveal-btn").classList.remove("hidden");
   document.getElementById("award-panel").classList.add("hidden");
-  document.getElementById("modal").classList.remove("hidden");
+
+  // Virtual Vantage dressing: gold banner + themed modal card.
+  const modalCard = document.querySelector("#modal .modal-card");
+  modalCard.classList.toggle("virtual-vantage", isVirtualVantage);
+  document.getElementById("modal-vv-banner").classList.toggle("hidden", !isVirtualVantage);
+
+  const modal = document.getElementById("modal");
+  if (isVirtualVantage) {
+    // Play the splash first, then reveal the clue underneath it.
+    playVirtualVantageSplash(() => modal.classList.remove("hidden"));
+  } else {
+    modal.classList.remove("hidden");
+  }
+}
+
+/* ---------- virtual vantage splash ---------- */
+
+function playVirtualVantageSplash(onDone) {
+  const splash = document.getElementById("vv-splash");
+  splash.classList.remove("hidden");
+  // restart the CSS animation if it played before
+  splash.classList.remove("animate");
+  void splash.offsetWidth; // force reflow
+  splash.classList.add("animate");
+
+  burstConfetti();
+
+  // Reveal the clue partway through so it's ready as the splash fades.
+  setTimeout(() => onDone && onDone(), 1500);
+  setTimeout(() => {
+    splash.classList.add("hidden");
+    splash.classList.remove("animate");
+  }, 2200);
 }
 
 function revealAnswer() {

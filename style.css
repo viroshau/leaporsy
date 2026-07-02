@@ -521,6 +521,116 @@ main, header { position: relative; z-index: 2; }
   to { transform: translateY(110vh) rotate(720deg); opacity: .8; }
 }
 
+/* ---------- Virtual Vantage ---------- */
+
+/* Full-screen splash that plays when a Virtual Vantage is picked. */
+.vv-splash {
+  position: fixed; inset: 0; z-index: 80;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at center, rgba(20, 3, 43, .78), rgba(20, 3, 43, .95));
+  pointer-events: none;
+  overflow: hidden;
+}
+.vv-splash.hidden { display: none; }
+
+.vv-splash-rays {
+  position: absolute; width: 200vmax; height: 200vmax;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 206, 0, .16) 0deg 8deg,
+    transparent 8deg 16deg
+  );
+  opacity: 0;
+}
+.vv-splash.animate .vv-splash-rays {
+  animation: vv-rays 2.2s linear forwards;
+}
+@keyframes vv-rays {
+  0%   { opacity: 0; transform: rotate(0deg) scale(.6); }
+  25%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: rotate(140deg) scale(1); }
+}
+
+.vv-splash-inner { position: relative; text-align: center; transform: scale(.4); opacity: 0; }
+.vv-splash.animate .vv-splash-inner {
+  animation: vv-pop 2.2s cubic-bezier(.2, 1.5, .3, 1) forwards;
+}
+@keyframes vv-pop {
+  0%   { transform: scale(.3) rotate(-12deg); opacity: 0; }
+  18%  { transform: scale(1.12) rotate(3deg); opacity: 1; }
+  30%  { transform: scale(1) rotate(0deg); }
+  82%  { transform: scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.25) rotate(0deg); opacity: 0; }
+}
+
+.vv-splash-kicker {
+  font-family: "Bungee", cursive;
+  font-size: clamp(1.4rem, 5vw, 2.6rem);
+  color: var(--cyan);
+  letter-spacing: .4em;
+  text-shadow: 0 0 20px rgba(0, 240, 255, .7);
+  animation: vv-twinkle .5s steps(2) infinite;
+}
+@keyframes vv-twinkle { 50% { opacity: .35; } }
+
+.vv-splash-title {
+  font-family: "Rubik Mono One", monospace;
+  font-size: clamp(3.4rem, 16vw, 10rem);
+  line-height: .92;
+  margin: 6px 0;
+  background: linear-gradient(180deg, #fff7c4 10%, var(--gold) 45%, var(--gold-deep) 78%, #ffdf6b 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 6px 0 rgba(0,0,0,.5)) drop-shadow(0 0 30px rgba(255, 206, 0, .8));
+  -webkit-text-stroke: 3px var(--ink);
+}
+.vv-splash-sub {
+  font-family: "Bungee", cursive;
+  font-size: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  letter-spacing: .18em;
+  padding: 6px 20px;
+  display: inline-block;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--hot-pink), var(--violet));
+  border: 3px solid #fff;
+  box-shadow: 0 6px 0 rgba(0,0,0,.45);
+}
+
+/* Gold banner shown inside the clue modal for a Virtual Vantage. */
+.vv-banner {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin: 0 auto 18px;
+  padding: 8px 18px;
+  border-radius: 14px;
+  font-family: "Bungee", cursive;
+  font-size: clamp(.85rem, 2.4vw, 1.15rem);
+  color: var(--ink);
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold), #fff7c4, var(--gold), var(--gold-deep));
+  background-size: 300% 100%;
+  border: 3px solid #fff;
+  box-shadow: 0 5px 0 rgba(0,0,0,.45), 0 0 26px rgba(255, 206, 0, .6);
+  animation: vv-banner-shimmer 2.5s linear infinite;
+}
+.vv-banner.hidden { display: none; }
+.vv-banner-star { animation: vv-twinkle .6s steps(2) infinite; }
+@keyframes vv-banner-shimmer { to { background-position: 300% 0; } }
+
+/* Themed modal card when the clue is a Virtual Vantage. */
+.modal-card.virtual-vantage {
+  border-color: var(--gold);
+  box-shadow: 0 0 80px rgba(255, 206, 0, .75), 0 30px 60px rgba(0,0,0,.6);
+}
+.modal-card.virtual-vantage .modal-points {
+  animation: vv-twinkle .7s steps(2) infinite;
+}
+
+/* Host DEBUG marker for Virtual Vantage tiles. */
+.debug-points.debug-vv {
+  color: var(--gold-deep);
+  text-shadow: 0 0 10px rgba(255, 206, 0, .8);
+}
+
 @media (max-width: 720px) {
   .board { gap: 7px; padding: 10px; }
   .clue-cell, .category-cell { min-height: 60px; }

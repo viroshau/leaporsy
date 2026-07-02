@@ -17,6 +17,12 @@
                   folder, e.g.  image: "images/my-picture.png"
        answerImage : (OPTIONAL) a picture revealed together with
                   the answer — use it for a punchline / big reveal.
+       virtualVantage : (OPTIONAL) set to true to make this a hidden
+                  "Virtual Vantage". The tile looks normal on the board,
+                  but picking it triggers a splash animation and gives
+                  the teams answer priority. Mark ONE clue per category
+                  for the classic feel (the host can preview which via
+                  DEBUG mode).
    - Point values are automatic: 100, 200, 300, 400, 500
      (row 1 = 100 ... row 5 = 500). Change POINT_VALUES below
      if you want different stakes.
@@ -42,8 +48,9 @@ const GAME_CONFIG = {
           answer: "What is the Transformer? (It lets the model weigh every word against every other word at once — the architecture under GPT, Claude, and BERT.)",
         },
         {
-          question: "Stuffing relevant documents into the prompt so the model answers from your data, not its memory.",
-          answer: "What is RAG (Retrieval-Augmented Generation)? (Cheaper and fresher than fine-tuning — the go-to approach for 'chat with our docs.')",
+          question: "This is the term for when a model confidently states something false — inventing a citation, API, or fact that sounds right but isn't.",
+          answer: "What is a hallucination? (The reason you always verify an AI's confident-sounding claims.)",
+          virtualVantage: true,
         },
         {
           question: "The catch-all term for training a base model further on your own narrower dataset — to teach it a style, domain, or task.",
@@ -63,19 +70,20 @@ const GAME_CONFIG = {
           answer: "What is an (AI) agent?",
         },
         {
-          question: "Letting a model call external functions — search the web, run code, hit an API — rather than only generating text.",
-          answer: "What is tool use (a.k.a. function calling)? (This is what turns a chatbot into something that can actually do things.)",
+          question: "This open standard — nicknamed 'USB-C for AI' — lets a model plug into external tools and data sources through one common connector, so it can call functions, search the web, or hit an API instead of only generating text.",
+          answer: "What is MCP (the Model Context Protocol)? (One integration standard for tool use / function calling, instead of hand-coding every tool.)",
         },
         {
-          question: "The open standard nicknamed 'USB-C for AI' — it lets models plug into tools and data sources through one common connector — abbreviated MCP.",
-          answer: "What is the Model Context Protocol? (One integration standard instead of hand-coding every tool.)",
+          question: "Stuffing relevant documents into the prompt so the model answers from your data, not its memory.",
+          answer: "What is RAG (Retrieval-Augmented Generation)? (Cheaper and fresher than fine-tuning — the go-to approach for 'chat with our docs,' and a common fix for hallucination.)",
         },
         {
-          question: "This is the name for the loop where an agent reasons about what to do, calls a tool, observes the result, and repeats.",
-          answer: "What is the ReAct loop (reason + act)?",
+          question: "This is the surrounding software scaffolding — the loop, tool plumbing, memory, and guardrails — that lets a raw model run as an agent, and often lets you swap the underlying LLM in and out easily.",
+          answer: "What is an (agent) harness? (The model is the engine; the harness is the rest of the car — model-agnostic ones like opencode let you point the same setup at any LLM.)",
+          virtualVantage: true,
         },
         {
-          question: "The aspirational milestone where a single AI matches humans across essentially all cognitive tasks — the endgame many agent efforts are chasing.",
+          question: "Famously slippery to define, this three-letter milestone marks the point where one AI can do essentially any intellectual task a human can — and labs can't even agree on how we'd know we've reached it.",
           answer: "What is AGI (Artificial General Intelligence)?",
         },
       ],
@@ -90,6 +98,7 @@ const GAME_CONFIG = {
         {
           question: "Coding by describing what you want in plain natural language and letting the AI write the actual code.",
           answer: "What is vibe coding? (Term popularized in 2025 — you steer by intent and 'vibes' instead of typing every line.)",
+          virtualVantage: true,
         },
         {
           question: "This is a packaged, reusable bundle of instructions (and sometimes scripts) that an AI agent loads on demand to handle a specialized task — a plug-in playbook you write once and reuse.",
@@ -133,6 +142,7 @@ const GAME_CONFIG = {
           answer: "Tells: the misspelling ('CAPPUCCIINA' with a double-i), the nonsense mashup names, the too-perfect plastic render, uncanny symmetry. Meet 'Cappuccino Assassino' & 'Ballerina Cappuccina' — a whole AI-slop meme genre.",
           image: "images/cappuccino-question.png",
           answerImage: "images/cappuccino-answer.png",
+          virtualVantage: true,
         },
       ],
     },
@@ -144,20 +154,21 @@ const GAME_CONFIG = {
           answer: "What are the USA, Canada, and Mexico?",
         },
         {
-          question: "For the first time ever, the tournament has expanded to this many teams.",
-          answer: "What is 48? (Up from 32 — 12 groups of four, plus a brand-new Round of 32.)",
+          question: "This many African nations advanced out of the group stages — nearly a clean sweep of the continent's entrants.",
+          answer: "What is 9 (out of 10)?",
         },
         {
-          question: "With the 2026 edition, this country becomes the first ever to host the men's World Cup three times.",
-          answer: "What is Mexico? (1970, 1986, and 2026.)",
+          question: "This country has appeared in every single men's World Cup since the tournament began in 1930.",
+          answer: "What is Brazil? (The only nation to play in all 22 editions.)",
+          virtualVantage: true,
         },
         {
           question: "The final will be played at this stadium just outside New York City.",
           answer: "What is MetLife Stadium (East Rutherford, New Jersey)?",
         },
         {
-          question: "The 2026 tournament features this record number of total matches.",
-          answer: "What is 104? (Up from 64 in previous editions.)",
+          question: "Name the players tied atop the 2026 World Cup's goal-scoring charts.",
+          answer: "Who are Messi, Mbappé, Haaland, and Kane? (The current Golden Boot leaders.)",
         },
       ],
     },
