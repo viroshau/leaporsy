@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd9a0"/>
+      <stop offset="1" stop-color="#e08bd0"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#sky)"/>
+  <!-- melted sun -->
+  <ellipse cx="520" cy="80" rx="55" ry="42" fill="#ffdf3a" opacity="0.9"/>
+  <ellipse cx="540" cy="110" rx="20" ry="34" fill="#ffdf3a" opacity="0.7"/>
+  <!-- wobbly cafe -->
+  <path d="M60 340 L75 170 L250 160 L268 345 Z" fill="#b06a4f"/>
+  <path d="M50 175 L140 110 L275 152 L255 178 Z" fill="#7d3f2c"/>
+  <!-- warped windows -->
+  <path d="M100 210 q20 -14 38 4 l-4 42 q-19 10 -33 -3 Z" fill="#ffeecb"/>
+  <path d="M170 205 q26 -8 36 8 l-9 46 q-20 6 -29 -6 Z" fill="#ffeecb"/>
+  <!-- garbled sign -->
+  <rect x="95" y="128" width="130" height="30" rx="6" fill="#fff6e0" transform="rotate(-4 160 143)"/>
+  <text x="103" y="150" font-size="19" fill="#5a2d1c" transform="rotate(-4 160 143)">CoffFee Shope</text>
+  <!-- person with too many fingers -->
+  <circle cx="420" cy="240" r="26" fill="#e8b48c"/>
+  <rect x="398" y="264" width="44" height="70" rx="14" fill="#4a6fb5"/>
+  <rect x="436" y="272" width="46" height="12" rx="6" fill="#e8b48c" transform="rotate(18 436 278)"/>
+  <!-- six fingers -->
+  <g fill="#e8b48c">
+    <rect x="476" y="278" width="22" height="6" rx="3" transform="rotate(4 476 281)"/>
+    <rect x="477" y="286" width="24" height="6" rx="3" transform="rotate(12 477 289)"/>
+    <rect x="476" y="294" width="23" height="6" rx="3" transform="rotate(22 476 297)"/>
+    <rect x="474" y="301" width="21" height="6" rx="3" transform="rotate(32 474 304)"/>
+    <rect x="470" y="308" width="19" height="6" rx="3" transform="rotate(44 470 311)"/>
+    <rect x="466" y="314" width="17" height="6" rx="3" transform="rotate(56 466 317)"/>
+  </g>
+  <!-- floating disembodied chair leg -->
+  <rect x="330" y="300" width="10" height="52" rx="4" fill="#6b4a2f" transform="rotate(-10 335 326)"/>
+  <rect x="305" y="292" width="70" height="12" rx="5" fill="#8a5f3c"/>
+  <!-- nonsense text on menu -->
+  <rect x="540" y="230" width="70" height="98" rx="6" fill="#fff6e0" transform="rotate(6 575 279)"/>
+  <g font-size="11" fill="#7a6a55" transform="rotate(6 575 279)">
+    <text x="548" y="252">M∃NLU</text>
+    <text x="548" y="270">Latt∈ 4Ⅎ</text>
+    <text x="548" y="288">Ċapumo 7</text>
+    <text x="548" y="306">Teaa &amp;e</text>
+  </g>
+  <rect y="340" width="640" height="60" fill="#c98a5e"/>
+</svg>
