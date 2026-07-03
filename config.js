@@ -53,11 +53,11 @@ const GAME_CONFIG = {
           virtualVantage: true,
         },
         {
-          question: "The catch-all term for training a base model further on your own narrower dataset — to teach it a style, domain, or task.",
+          question: "The catch-all term for taking an existing base model and training it further on your own data, to specialize it for a style, domain, or task.",
           answer: "What is fine-tuning? (The alternative to RAG: you bake the knowledge into the weights instead of feeding it in at question-time.)",
         },
         {
-          question: "This landmark 2017 Google paper introduced the Transformer — its punchy six-word title cheekily claims a single mechanism is all you require.",
+          question: "This landmark 2017 Google paper introduced the Transformer — its punchy five-word title cheekily claims one mechanism is all you require.",
           answer: "What is 'Attention Is All You Need'? (Its self-attention mechanism lets every token weigh every other token — the breakthrough that made modern LLMs possible.)",
         },
       ],
@@ -74,12 +74,12 @@ const GAME_CONFIG = {
           answer: "What is MCP (the Model Context Protocol)? (One integration standard for tool use / function calling, instead of hand-coding every tool.)",
         },
         {
-          question: "Stuffing relevant documents into the prompt so the model answers from your data, not its memory.",
+          question: "Answering questions from your own documents by embedding them, running a similarity search against the user's query, and stuffing the top matches into the prompt.",
           answer: "What is RAG (Retrieval-Augmented Generation)? (Cheaper and fresher than fine-tuning — the go-to approach for 'chat with our docs,' and a common fix for hallucination.)",
         },
         {
-          question: "This is the surrounding software scaffolding — the loop, tool plumbing, memory, and guardrails — that lets a raw model run as an agent, and often lets you swap the underlying LLM in and out easily.",
-          answer: "What is an (agent) harness? (The model is the engine; the harness is the rest of the car — model-agnostic ones like opencode let you point the same setup at any LLM.)",
+          question: "If the LLM is the engine, this is the rest of the car — the loop, tools, memory, and guardrails around a raw model that make it actually run as an agent.",
+          answer: "What is an (agent) harness? (Model-agnostic ones like opencode let you swap the underlying LLM in and out and point the same setup at any model.)",
           virtualVantage: true,
         },
         {
@@ -154,7 +154,7 @@ const GAME_CONFIG = {
           answer: "What are the USA, Canada, and Mexico?",
         },
         {
-          question: "This many African nations advanced out of the group stages — nearly a clean sweep of the continent's entrants.",
+          question: "This many African nations advanced past the group stage — nearly a clean sweep of the continent's entrants.",
           answer: "What is 9 (out of 10)?",
         },
         {
